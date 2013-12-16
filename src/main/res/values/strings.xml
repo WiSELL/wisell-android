@@ -12,5 +12,6 @@
     <string name="number_hint">77 555 55 55</string>
     <string name="term_use">Term of use</string>
     <string name="bt_continu">Continu</string>
+    <string name="title_activity_available_hotspot">AvailableHotspotActivity</string>
 
 </resources>
