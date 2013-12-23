@@ -6,5 +6,7 @@
     <string name="action_settings">Settings</string>
     <string name="title_activity_home">HomeActivity</string>
     <string name="title_activity_hotspot">HotspotActivity</string>
+    <string name="title_activity_connected_hotspot">ConnectedHotspotActivity</string>
+    <string name="wifi_install_error_message">Cannot connect to wifi AP</string>
 
 </resources>

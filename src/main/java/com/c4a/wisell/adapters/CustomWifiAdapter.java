@@ -46,7 +46,7 @@ public class CustomWifiAdapter extends ArrayAdapter<WifiRow> {
             holder = (ViewHolder) convertView.getTag();
         holder.textView.setText(wifiRow.getBssid());
 //        holder.imageView.setImageResource(wifiRow.getWifiRange());
-        holder.imageView.setImageResource(R.drawable.ic_launcher);
+        holder.imageView.setImageResource(R.drawable.ic_icon_wifi);
         return convertView;
     }
 }
