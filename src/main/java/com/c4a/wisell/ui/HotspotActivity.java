@@ -1,11 +1,17 @@
 package com.c4a.wisell.ui;
 
+import android.app.Activity;
 import android.content.BroadcastReceiver;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.ServiceConnection;
+import android.net.Uri;
 import android.net.wifi.ScanResult;
 import android.net.wifi.WifiManager;
+import android.os.IBinder;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
@@ -22,20 +28,25 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.android.internal.telephony.IExtendedNetworkService;
 import com.c4a.wisell.R;
 import com.c4a.wisell.adapters.CustomWifiAdapter;
+import com.c4a.wisell.services.CDUSSDService;
+import com.c4a.wisell.utils.Billing;
 import com.c4a.wisell.utils.WifiRow;
 import com.c4a.wisell.utils.WifiUtils;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class HotspotActivity extends ActionBarActivity {
+public class HotspotActivity extends Activity {
     ListView wilist;
     List<WifiRow> wifiRows;
     WifiManager manager;
     CustomWifiAdapter adapter;
     WifiReceiver wifiReceiver;
+    int creditInitial;
+    int uniteUtilise;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,30 +70,29 @@ public class HotspotActivity extends ActionBarActivity {
         wilist.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+                int credit = Billing.getCredit();//
                 Toast.makeText(getApplicationContext(),
-                        "Click ListItem Number " + position, Toast.LENGTH_LONG)
+                        "Click ListItem Number " + credit, Toast.LENGTH_LONG)
                         .show();
+                
             }
         });
-    }
 
+    }
 
     @Override
     protected void onPause() {
         super.onPause();
-        unregisterReceiver(wifiReceiver);
+//        unregisterReceiver(wifiReceiver);
         Log.d("Wisell","Wifireceiver paused");
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        wifiReceiver = new WifiReceiver();
-        IntentFilter filter = new IntentFilter();
-        filter.addAction(WifiManager.SCAN_RESULTS_AVAILABLE_ACTION);
-        registerReceiver(wifiReceiver,filter);
         Log.d("Wisell","Wifireceiver resumed");
     }
+
 
     @Override
     protected void onDestroy() {
